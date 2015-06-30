@@ -8,3 +8,4 @@ packages/EntityFramework*
 */obj/*
 *.nupkg
 packages/*/*
+*/bin/*
