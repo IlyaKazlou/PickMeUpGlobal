@@ -1,0 +1,10 @@
+packages/Microsoft*
+PickMeAppGlobal/bin/*
+PickMeAppGlobal/obj/*
+packages/jQuery*
+packages/EntityFramework*
+*.dll
+*.pdb
+*/obj/*
+*.nupkg
+packages/*/*
