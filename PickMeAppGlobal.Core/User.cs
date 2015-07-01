@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using PickMeAppGlobal.Core.Base;
 
 namespace PickMeAppGlobal.Core
 {
-  public class User
+  public class User : BaseEntity
   {
-    public Guid Id { get; set; }
-
     public string Name { get; set; }
 
     public string DriverHubName { get; set; }
@@ -14,5 +12,7 @@ namespace PickMeAppGlobal.Core
     public string PassengerHubName { get; set; }
 
     public virtual List<Subscriber> Subscribers { get; set; }
+
+    public virtual List<Point> Points { get; set; }
   }
 }

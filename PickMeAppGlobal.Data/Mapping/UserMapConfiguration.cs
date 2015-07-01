@@ -10,6 +10,7 @@ namespace PickMeAppGlobal.Data.Mapping
       this.ToTable("Users").HasKey(m => m.Id);
       this.Property(m => m.Name).HasMaxLength(50);
       this.HasMany(m => m.Subscribers).WithRequired(m => m.User).HasForeignKey(m => m.UserId);
+      this.HasMany(m => m.Points).WithRequired(m => m.User).HasForeignKey(m => m.UserId);
     }
   }
 }

@@ -12,13 +12,15 @@ namespace PickMeAppGlobal.Data
 
     public PickMeAppContext() : base("PickMeAppGlobal")
     {
-      Database.SetInitializer(new DropCreateDatabaseAlways<PickMeAppContext>());
+      Database.SetInitializer(new PickMeAppDbInitializer());
     }
 
     protected override void OnModelCreating(DbModelBuilder modelBuilder)
     {
       modelBuilder.Configurations.Add(new UserMapConfiguration());
       modelBuilder.Configurations.Add(new SubscriberMapConfiguration());
+      modelBuilder.Configurations.Add(new PointMapConfiguration());
+
       base.OnModelCreating(modelBuilder);
     }
   }

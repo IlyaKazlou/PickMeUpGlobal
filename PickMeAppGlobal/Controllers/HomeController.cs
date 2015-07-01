@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Linq;
+using System.Threading.Tasks;
 using System.Web.Mvc;
 
 using PickMeAppGlobal.Data.Repositories;
@@ -18,7 +19,9 @@ namespace PickMeAppGlobal.Controllers
     {
       ViewBag.Title = "Home Page";
 
-      var users = await this.Repository.GetAll();
+      var users = await this.Repository.GetAllAsync();
+      var user = users.First(m => m.Name == "Ilya Kazlou1");
+      var subscribers = user.Subscribers;
 
       return View();
     }
