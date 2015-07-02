@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-
 using PickMeAppGlobal.Core;
 using PickMeAppGlobal.Core.Enumes;
 
@@ -13,8 +12,14 @@ namespace PickMeAppGlobal.Data.Repositories.Interfaces
 
     Task<User> GetAsync(Guid userId);
 
-    Task<List<Subscriber>> GetSubscribersAsync(Guid userId, UserRoles targetUserRole);
+    List<Subscriber> GetSubscribers(User user, UserRoles targetUserRole);
 
-    Task<Point> GetPointsAsync(Guid userId, DateTime fromDate, DateTime toDate);
+    void AddUser(User user);
+
+    void UpdateUser(User user);
+
+    void DeleteUser(Guid userId);
+
+    void SaveChangesAsync();
   }
 }

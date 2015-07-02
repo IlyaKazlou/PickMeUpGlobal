@@ -1,5 +1,4 @@
 ﻿using System;
-using System.CodeDom;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
@@ -31,17 +30,31 @@ namespace PickMeAppGlobal.Data.Repositories
       return await this.DbSet.FirstOrDefaultAsync(m => m.Id == id);
     }
 
-
-    public async Task<List<Subscriber>> GetSubscribersAsync(Guid userId, UserRoles targetUserRole)
+    public List<Subscriber> GetSubscribers(User user, UserRoles targetUserRole)
     {
-      var type = targetUserRole.ToString();
-      var subscribers = await this.DbContext.Subscribers.Where(m => m.UserId == userId && m.HubType == type).ToListAsync();
-      return subscribers;
+      var currentUserRole = targetUserRole.ToString();
+      return user.Subscribers.Where(m => m.HubType == currentUserRole).ToList();
     }
 
-    public Task<Point> GetPointsAsync(Guid userId, DateTime fromDate, DateTime toDate)
+    public void AddUser(User user)
     {
-      throw new NotImplementedException();
+      this.DbSet.Add(user);
+    }
+
+    public void UpdateUser(User user)
+    {
+      this.DbContext.Entry(user).State = EntityState.Modified;
+    }
+
+    public void DeleteUser(Guid userId)
+    {
+      var user = new User { Id = userId };
+      this.DbContext.Entry(user).State = EntityState.Deleted; 
+    }
+
+    public async void SaveChangesAsync()
+    {
+      await this.DbContext.SaveChangesAsync();
     }
   }
 }
