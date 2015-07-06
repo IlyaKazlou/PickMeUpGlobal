@@ -141,7 +141,7 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\ValuesController.cs" />
+    <Compile Include="Controllers\AppApiController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -198,6 +198,10 @@
     <ProjectReference Include="..\PickMeAppGlobal.Data\PickMeAppGlobal.Data.csproj">
       <Project>{cd35dca7-443d-418f-9f72-9ff7ad0964d6}</Project>
       <Name>PickMeAppGlobal.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\PickMeAppGlobal.Service\PickMeAppGlobal.Service.csproj">
+      <Project>{af9a0cd5-ea39-41ab-b956-467028e06161}</Project>
+      <Name>PickMeAppGlobal.Service</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

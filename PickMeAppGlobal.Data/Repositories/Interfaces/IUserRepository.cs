@@ -14,12 +14,12 @@ namespace PickMeAppGlobal.Data.Repositories.Interfaces
 
     List<Subscriber> GetSubscribers(User user, UserRoles targetUserRole);
 
+    void AddGeolocationPointToUser(Guid userId, Point point);
+
+    List<Point> GetGeolocationPoints(User user, Func<Point, bool> expr = null);
+
     void AddUser(User user);
 
-    void UpdateUser(User user);
-
     void DeleteUser(Guid userId);
-
-    void SaveChangesAsync();
   }
 }

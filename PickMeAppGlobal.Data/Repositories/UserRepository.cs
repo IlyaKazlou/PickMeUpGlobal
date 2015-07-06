@@ -9,14 +9,12 @@ using PickMeAppGlobal.Data.Repositories.Interfaces;
 
 namespace PickMeAppGlobal.Data.Repositories
 {
-  public class UserRepository : IUserRepository
+  public class UserRepository : BaseRepository, IUserRepository
   {
-    public PickMeAppContext DbContext { get; set; }
     private DbSet<User> DbSet { get; set; }
 
     public UserRepository()
     {
-      this.DbContext = new PickMeAppContext();
       this.DbSet = this.DbContext.Users;
     }
 
@@ -36,25 +34,37 @@ namespace PickMeAppGlobal.Data.Repositories
       return user.Subscribers.Where(m => m.HubType == currentUserRole).ToList();
     }
 
+    public List<Point> GetGeolocationPoints(User user, Func<Point, bool> expr = null)
+    {
+      if (expr != null)
+      {
+        return user.Points.Where(expr).ToList();
+      }
+
+      return user.Points;
+    }
+
+    public async void AddGeolocationPointToUser(Guid userId, Point point)
+    {
+      var user = await this.GetAsync(userId);
+      if (user.Points == null)
+      {
+        user.Points = new List<Point>();
+      }
+
+      user.Points.Add(point);
+    }
+
     public void AddUser(User user)
     {
       this.DbSet.Add(user);
     }
 
-    public void UpdateUser(User user)
-    {
-      this.DbContext.Entry(user).State = EntityState.Modified;
-    }
-
     public void DeleteUser(Guid userId)
     {
       var user = new User { Id = userId };
-      this.DbContext.Entry(user).State = EntityState.Deleted; 
-    }
-
-    public async void SaveChangesAsync()
-    {
-      await this.DbContext.SaveChangesAsync();
+      this.DbSet.Attach(user);
+      this.DbSet.Remove(user);
     }
   }
 }
