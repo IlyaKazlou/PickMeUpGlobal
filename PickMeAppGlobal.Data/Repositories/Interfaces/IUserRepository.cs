@@ -6,7 +6,7 @@ using PickMeAppGlobal.Core.Enumes;
 
 namespace PickMeAppGlobal.Data.Repositories.Interfaces
 {
-  public interface IUserRepository
+  public interface IUserRepository : IBaseRepository
   {
     Task<List<User>> GetAllAsync();
 
@@ -14,7 +14,7 @@ namespace PickMeAppGlobal.Data.Repositories.Interfaces
 
     List<Subscriber> GetSubscribers(User user, UserRoles targetUserRole);
 
-    void AddGeolocationPointToUser(Guid userId, Point point);
+    void AddGeolocationPointToUser(Point point);
 
     List<Point> GetGeolocationPoints(User user, Func<Point, bool> expr = null);
 

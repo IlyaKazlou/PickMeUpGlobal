@@ -11,7 +11,7 @@ namespace PickMeAppGlobal.Data.Repositories
 {
   public class UserRepository : BaseRepository, IUserRepository
   {
-    private DbSet<User> DbSet { get; set; }
+    protected DbSet<User> DbSet { get; set; }
 
     public UserRepository()
     {
@@ -44,15 +44,11 @@ namespace PickMeAppGlobal.Data.Repositories
       return user.Points;
     }
 
-    public async void AddGeolocationPointToUser(Guid userId, Point point)
+    public void AddGeolocationPointToUser(Point point)
     {
-      var user = await this.GetAsync(userId);
-      if (user.Points == null)
-      {
-        user.Points = new List<Point>();
-      }
-
-      user.Points.Add(point);
+      point.Date = DateTime.Now;
+      point.Id = Guid.NewGuid();
+      this.DbContext.Points.Add(point);
     }
 
     public void AddUser(User user)

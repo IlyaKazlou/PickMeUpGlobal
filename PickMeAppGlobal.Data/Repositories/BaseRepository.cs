@@ -5,7 +5,7 @@ namespace PickMeAppGlobal.Data.Repositories
 {
   public class BaseRepository : IBaseRepository
   {
-    public PickMeAppContext DbContext { get; set; }
+    protected PickMeAppContext DbContext { get; set; }
 
     public BaseRepository()
     {

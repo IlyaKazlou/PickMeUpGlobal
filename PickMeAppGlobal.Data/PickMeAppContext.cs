@@ -10,6 +10,8 @@ namespace PickMeAppGlobal.Data
 
     public DbSet<Subscriber> Subscribers { get; set; }
 
+    public DbSet<Point> Points { get; set; }
+
     public PickMeAppContext() : base("PickMeAppGlobal")
     {
       Database.SetInitializer(new PickMeAppDbInitializer());

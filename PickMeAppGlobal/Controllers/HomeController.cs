@@ -20,9 +20,6 @@ namespace PickMeAppGlobal.Controllers
     {
       ViewBag.Title = "Home Page";
 
-      this.Repository.DeleteUser(new Guid("B64F5F0D-9419-45F6-ADD8-30F5724E0C49"));
-      await this.Repository.SaveChangesAsync();
-
       return View();
     }
   }

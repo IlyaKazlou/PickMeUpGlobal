@@ -39,7 +39,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BaseService.cs" />
     <Compile Include="Interfaces\IService.cs" />
     <Compile Include="Interfaces\IUserService.cs" />
     <Compile Include="UserService.cs" />
@@ -53,6 +52,10 @@
     <ProjectReference Include="..\PickMeAppGlobal.Data\PickMeAppGlobal.Data.csproj">
       <Project>{cd35dca7-443d-418f-9f72-9ff7ad0964d6}</Project>
       <Name>PickMeAppGlobal.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\PickMeAppGlobal.ViewModel\PickMeAppGlobal.ViewModel.csproj">
+      <Project>{198c8da2-d8ed-470c-9c94-6102b6093140}</Project>
+      <Name>PickMeAppGlobal.ViewModel</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

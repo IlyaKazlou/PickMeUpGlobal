@@ -1,16 +1,14 @@
 ﻿using System;
 
-using PickMeAppGlobal.Core.Base;
-
-namespace PickMeAppGlobal.Core
+namespace PickMeAppGlobal.ViewModel.ViewModels
 {
-  public class Point : BaseEntity
+  public class PointViewModel : IViewModel
   {
     public Guid UserId { get; set; }
 
     public DateTime Date { get; set; }
 
-    public virtual User User { get; set; }
+    public Guid Id { get; set; }
 
     public decimal Latitude { get; set; }
 

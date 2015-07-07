@@ -6,7 +6,7 @@ using PickMeAppGlobal.Core;
 
 namespace PickMeAppGlobal.Data
 {
-  public class PickMeAppDbInitializer : CreateDatabaseIfNotExists<PickMeAppContext>
+  public class PickMeAppDbInitializer : DropCreateDatabaseIfModelChanges<PickMeAppContext>
   {
     protected override void Seed(PickMeAppContext context)
     {
