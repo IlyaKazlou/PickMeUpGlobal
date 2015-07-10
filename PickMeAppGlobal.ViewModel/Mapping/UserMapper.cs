@@ -18,15 +18,6 @@ namespace PickMeAppGlobal.ViewModel.Mapping
         viewModel.DriverHubName = obj.DriverHubName;
         viewModel.Id = obj.Id;
 
-        viewModel.Points = obj.Points.Select(point => new PointViewModel
-        {
-          Date = point.Date,
-          Id = point.Id,
-          Latitude = point.Latitude,
-          Longitude = point.Longitude,
-          UserId = point.UserId
-        }).ToList();
-
         viewModel.Subscribers = obj.Subscribers.Select(subscriber => new SubscriberViewModel
         {
           HubName = subscriber.HubName,

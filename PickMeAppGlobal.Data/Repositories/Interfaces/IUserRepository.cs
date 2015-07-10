@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using PickMeAppGlobal.Core;
-using PickMeAppGlobal.Core.Enumes;
 
 namespace PickMeAppGlobal.Data.Repositories.Interfaces
 {
@@ -12,11 +11,15 @@ namespace PickMeAppGlobal.Data.Repositories.Interfaces
 
     Task<User> GetAsync(Guid userId);
 
-    List<Subscriber> GetSubscribers(User user, UserRoles targetUserRole);
+    Task<List<Subscriber>> GetSubscribers(Guid userId, string targetUserRole);
 
     void AddGeolocationPointToUser(Point point);
 
     List<Point> GetGeolocationPoints(User user, Func<Point, bool> expr = null);
+
+    Task<Point> GetLatestPoint(Guid userId);
+
+    Task<List<Point>> GetLatestPoints(params Guid[] userIds);
 
     void AddUser(User user);
 

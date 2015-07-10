@@ -12,10 +12,8 @@ namespace PickMeAppGlobal.ViewModel.Mapping
       if (obj != null)
       {
         viewModel.Date = obj.Date;
-        viewModel.Id = obj.Id;
         viewModel.Latitude = obj.Latitude;
         viewModel.Longitude = obj.Longitude;
-        viewModel.UserId = obj.UserId;
       }
 
       return viewModel;

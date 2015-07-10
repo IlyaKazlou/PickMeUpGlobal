@@ -1,4 +1,5 @@
-﻿using System.Web.Http;
+﻿using System.Net.Http.Formatting;
+using System.Web.Http;
 
 namespace PickMeAppGlobal
 {
@@ -7,6 +8,10 @@ namespace PickMeAppGlobal
     public static void Register(HttpConfiguration config)
     {
       config.EnableCors();
+
+      config.Formatters.Clear();
+
+      config.Formatters.Add(new JsonMediaTypeFormatter());
 
       // Web API routes
       config.MapHttpAttributeRoutes();

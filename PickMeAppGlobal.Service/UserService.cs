@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using PickMeAppGlobal.Core;
 using PickMeAppGlobal.Core.Enumes;
@@ -40,14 +41,23 @@ namespace PickMeAppGlobal.Service
       return this.UserMapper.GetViewModel(await this.UserRepository.GetAsync(userId));
     }
 
-    public List<SubscriberViewModel> GetSubscribers(User user, UserRoles targetUserRole)
+    public async Task<List<SubscriberViewModel>> GetSubscribers(Guid userId, string targetUserRole)
     {
-      return this.SubscriberMapper.GetViewModelList(this.UserRepository.GetSubscribers(user, targetUserRole));
+      var subscribers = await this.UserRepository.GetSubscribers(userId, targetUserRole);
+      var userIds = subscribers.Select(s => s.SubscriberUserId).ToArray();
+      var latestPoints = await this.UserRepository.GetLatestPoints(userIds);
+      var viewModels = this.SubscriberMapper.GetViewModelList(subscribers, latestPoints);
+      return viewModels;
     }
 
     public void AddGeolocationPointToUser(Point point)
     {
       this.UserRepository.AddGeolocationPointToUser(point);
+    }
+
+    public async Task<Point> GetLatestPoint(Guid userId)
+    {
+      return await this.UserRepository.GetLatestPoint(userId);
     }
 
     public List<PointViewModel> GetGeolocationPoints(User user, Func<Point, bool> expr = null)

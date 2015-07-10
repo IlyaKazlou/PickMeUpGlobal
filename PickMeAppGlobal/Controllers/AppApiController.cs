@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Cors;
 
+using PickMeAppGlobal.Controllers.RequestModels;
 using PickMeAppGlobal.Core;
 using PickMeAppGlobal.Service;
 using PickMeAppGlobal.Service.Interfaces;
@@ -21,16 +22,21 @@ namespace PickMeAppGlobal.Controllers
       this.UserService = new UserService();
     }
 
-    public async void AddPoint([FromBody]Point point)
+    public async Task AddPoint([FromBody]Point point)
     {
       this.UserService.AddGeolocationPointToUser(point);
       await this.UserService.SaveChangesAsync();
-      this.UserService.Dispose();
     }
 
     public async Task<List<UserViewModel>> GetAllUsers()
     {
       return await this.UserService.GetAllAsync();
+    }
+
+    [HttpPost]
+    public async Task<List<SubscriberViewModel>> GetUserSubscribers([FromBody]UserInRoleQuery query)
+    {
+      return await this.UserService.GetSubscribers(query.UserId, query.CurrentUserRole);
     }
   }
 }

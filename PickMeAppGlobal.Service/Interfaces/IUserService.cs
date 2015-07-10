@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using PickMeAppGlobal.Core;
-using PickMeAppGlobal.Core.Enumes;
 using PickMeAppGlobal.ViewModel.ViewModels;
 
 namespace PickMeAppGlobal.Service.Interfaces
@@ -15,7 +14,7 @@ namespace PickMeAppGlobal.Service.Interfaces
 
     Task<UserViewModel> GetAsync(Guid userId);
 
-    List<SubscriberViewModel> GetSubscribers(User user, UserRoles targetUserRole);
+    Task<List<SubscriberViewModel>> GetSubscribers(Guid userId, string targetUserRole);
 
     void AddGeolocationPointToUser(Point point);
 

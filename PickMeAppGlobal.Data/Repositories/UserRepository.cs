@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Data.Entity.Core.Common.CommandTrees;
 using System.Linq;
 using System.Threading.Tasks;
 using PickMeAppGlobal.Core;
-using PickMeAppGlobal.Core.Enumes;
 using PickMeAppGlobal.Data.Repositories.Interfaces;
 
 namespace PickMeAppGlobal.Data.Repositories
@@ -28,10 +28,10 @@ namespace PickMeAppGlobal.Data.Repositories
       return await this.DbSet.FirstOrDefaultAsync(m => m.Id == id);
     }
 
-    public List<Subscriber> GetSubscribers(User user, UserRoles targetUserRole)
+    public async Task<List<Subscriber>> GetSubscribers(Guid userId, string targetUserRole)
     {
-      var currentUserRole = targetUserRole.ToString();
-      return user.Subscribers.Where(m => m.HubType == currentUserRole).ToList();
+      var user = await this.GetAsync(userId);
+      return user.Subscribers.Where(m => m.HubType == targetUserRole).ToList();
     }
 
     public List<Point> GetGeolocationPoints(User user, Func<Point, bool> expr = null)
@@ -42,6 +42,26 @@ namespace PickMeAppGlobal.Data.Repositories
       }
 
       return user.Points;
+    }
+
+    public async Task<Point> GetLatestPoint(Guid userId)
+    {
+      IQueryable<Point> userPoints = this.DbContext.Points.Where(p => p.UserId == userId).OrderByDescending(p => p.Date);
+      var latestPoint = await userPoints.FirstAsync();
+      return latestPoint;
+    }
+
+    public async Task<List<Point>> GetLatestPoints(params Guid[] userIds)
+    {
+      var query = DbContext.Points.Where(p => userIds.Contains(p.UserId)).AsQueryable();
+      var now = DateTime.Now;
+      var pastDate = new DateTime(now.Year, now.Month - 2, 1);
+      query = query.Where(p => p.Date > pastDate);
+
+      var userGroups = query.GroupBy(p => p.UserId).Select(g => g.OrderByDescending(p => p.Date));
+      var points = new List<Point>();
+      await userGroups.ForEachAsync(m => points.Add(m.First()));
+      return points;
     }
 
     public void AddGeolocationPointToUser(Point point)

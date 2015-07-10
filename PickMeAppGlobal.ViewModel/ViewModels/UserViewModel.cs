@@ -14,7 +14,5 @@ namespace PickMeAppGlobal.ViewModel.ViewModels
     public Guid Id { get; set; }
 
     public virtual List<SubscriberViewModel> Subscribers { get; set; }
-
-    public virtual List<PointViewModel> Points { get; set; }
   }
 }
