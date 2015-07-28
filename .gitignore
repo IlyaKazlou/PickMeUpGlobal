@@ -9,3 +9,5 @@ packages/EntityFramework*
 *.nupkg
 packages/*/*
 */bin/*
+_ReSharperPlatformVs121.PickMeAppGlobal/*
+_ReSharperPlatform*
