@@ -1,6 +1,4 @@
-﻿using System;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using System.Web.Mvc;
 
 using PickMeAppGlobal.Data.Repositories;
@@ -20,6 +18,11 @@ namespace PickMeAppGlobal.Controllers
     {
       ViewBag.Title = "Home Page";
 
+      return View();
+    }
+
+    public ActionResult SuccessfulAuthorization()
+    {
       return View();
     }
   }

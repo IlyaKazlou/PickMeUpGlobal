@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Security.Claims;
@@ -34,14 +33,14 @@ namespace PickMeAppGlobal.Controllers
         return new ChallengeResult(provider, this);
       }
 
-      var redirectUriValidationResult = ValidateClientAndRedirectUri(this.Request, ref redirectUri);
+      var redirectUriValidationResult = this.ValidateClientAndRedirectUri(this.Request, ref redirectUri);
 
       if (!string.IsNullOrWhiteSpace(redirectUriValidationResult))
       {
         return BadRequest(redirectUriValidationResult);
       }
 
-      ExternalLoginData externalLogin = ExternalLoginData.FromIdentity(User.Identity as ClaimsIdentity);
+      var externalLogin = ExternalLoginData.FromIdentity(User.Identity as ClaimsIdentity);
 
       if (externalLogin == null)
       {
@@ -56,7 +55,7 @@ namespace PickMeAppGlobal.Controllers
 
       redirectUri = string.Format("{0}#external_access_token={1}&provider={2}&haslocalaccount={3}&external_user_name={4}",
                                       redirectUri,
-                                      "vcbxvcbxvcb",
+                                      externalLogin.ExternalAccessToken,
                                       externalLogin.LoginProvider,
                                       true,
                                       externalLogin.UserName);
@@ -74,19 +73,7 @@ namespace PickMeAppGlobal.Controllers
       public string LoginProvider { get; set; }
       public string ProviderKey { get; set; }
       public string UserName { get; set; }
-
-      public IList<Claim> GetClaims()
-      {
-        IList<Claim> claims = new List<Claim>();
-        claims.Add(new Claim(ClaimTypes.NameIdentifier, ProviderKey, null, LoginProvider));
-
-        if (UserName != null)
-        {
-          claims.Add(new Claim(ClaimTypes.Name, UserName, null, LoginProvider));
-        }
-
-        return claims;
-      }
+      public string ExternalAccessToken { get; set; }
 
       public static ExternalLoginData FromIdentity(ClaimsIdentity identity)
       {
@@ -97,8 +84,7 @@ namespace PickMeAppGlobal.Controllers
 
         Claim providerKeyClaim = identity.FindFirst(ClaimTypes.NameIdentifier);
 
-        if (providerKeyClaim == null || String.IsNullOrEmpty(providerKeyClaim.Issuer)
-            || String.IsNullOrEmpty(providerKeyClaim.Value))
+        if (providerKeyClaim == null || String.IsNullOrEmpty(providerKeyClaim.Issuer) || String.IsNullOrEmpty(providerKeyClaim.Value))
         {
           return null;
         }
@@ -112,7 +98,8 @@ namespace PickMeAppGlobal.Controllers
         {
           LoginProvider = providerKeyClaim.Issuer,
           ProviderKey = providerKeyClaim.Value,
-          UserName = identity.FindFirstValue(ClaimTypes.Name)
+          UserName = identity.FindFirstValue(ClaimTypes.Name),
+          ExternalAccessToken = identity.FindFirstValue("ExternalAccessToken")
         };
       }
     }
