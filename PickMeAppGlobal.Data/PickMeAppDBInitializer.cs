@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Data.Entity;
 
 using PickMeAppGlobal.Core;
@@ -21,7 +20,7 @@ namespace PickMeAppGlobal.Data
         DriverHubName = "IlyaKazlou_1_Driver",
         PassengerHubName = "IlyaKazlou_1_Passanger",
         Name = "Ilya Kazlou1",
-        Id = Guid.NewGuid()
+        Id = 1
       };
 
       var user2 = new User
@@ -29,7 +28,7 @@ namespace PickMeAppGlobal.Data
         DriverHubName = "IlyaKazlou2_2_Driver",
         PassengerHubName = "IlyaKazlou2_2_Passanger",
         Name = "Ilya Kazlou2",
-        Id = Guid.NewGuid()
+        Id = 2
       };
 
       var user3 = new User
@@ -37,7 +36,7 @@ namespace PickMeAppGlobal.Data
         DriverHubName = "IlyaKazlou3_3_Driver",
         PassengerHubName = "IlyaKazlou3_3_Passanger",
         Name = "Ilya Kazlou3",
-        Id = Guid.NewGuid()
+        Id = 3
       };
 
       user1.Subscribers = new List<Subscriber>

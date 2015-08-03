@@ -5,6 +5,6 @@ namespace PickMeAppGlobal.Core.Base
   [Serializable]
   public class BaseEntity : IEntity
   {
-    public Guid Id { get; set; }
+    public int Id { get; set; }
   }
 }

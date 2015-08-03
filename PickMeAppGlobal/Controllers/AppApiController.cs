@@ -37,5 +37,10 @@ namespace PickMeAppGlobal.Controllers
     {
       return await this.UserService.GetSubscribers(query.UserId, query.CurrentUserRole);
     }
+
+    protected override void Dispose(bool disposing)
+    {
+     this.UserService.Dispose();
+    }
   }
 }

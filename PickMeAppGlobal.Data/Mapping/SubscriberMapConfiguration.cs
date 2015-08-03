@@ -1,4 +1,5 @@
-﻿using System.Data.Entity.ModelConfiguration;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+using System.Data.Entity.ModelConfiguration;
 using PickMeAppGlobal.Core;
 
 namespace PickMeAppGlobal.Data.Mapping

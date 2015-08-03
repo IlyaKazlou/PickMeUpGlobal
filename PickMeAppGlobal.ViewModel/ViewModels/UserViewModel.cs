@@ -11,7 +11,7 @@ namespace PickMeAppGlobal.ViewModel.ViewModels
 
     public string PassengerHubName { get; set; }
 
-    public Guid Id { get; set; }
+    public int Id { get; set; }
 
     public virtual List<SubscriberViewModel> Subscribers { get; set; }
   }

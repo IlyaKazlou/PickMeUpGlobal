@@ -9,20 +9,20 @@ namespace PickMeAppGlobal.Data.Repositories.Interfaces
   {
     Task<List<User>> GetAllAsync();
 
-    Task<User> GetAsync(Guid userId);
+    Task<User> GetAsync(int userId);
 
-    Task<List<Subscriber>> GetSubscribers(Guid userId, string targetUserRole);
+    Task<List<Subscriber>> GetSubscribers(int userId, string targetUserRole);
 
     void AddGeolocationPointToUser(Point point);
 
     List<Point> GetGeolocationPoints(User user, Func<Point, bool> expr = null);
 
-    Task<Point> GetLatestPoint(Guid userId);
+    Task<Point> GetLatestPoint(int userId);
 
-    Task<List<Point>> GetLatestPoints(params Guid[] userIds);
+    Task<List<Point>> GetLatestPoints(params int[] userIds);
 
     void AddUser(User user);
 
-    void DeleteUser(Guid userId);
+    void DeleteUser(int userId);
   }
 }

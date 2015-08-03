@@ -1,12 +1,10 @@
 ﻿using System;
 
-using PickMeAppGlobal.Core.Base;
-
 namespace PickMeAppGlobal.Core
 {
-  public class Point : BaseEntity
+  public class Point
   {
-    public Guid UserId { get; set; }
+    public int UserId { get; set; }
 
     public DateTime Date { get; set; }
 

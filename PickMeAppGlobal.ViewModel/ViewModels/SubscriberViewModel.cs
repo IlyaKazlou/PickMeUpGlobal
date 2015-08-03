@@ -4,9 +4,9 @@ namespace PickMeAppGlobal.ViewModel.ViewModels
 {
   public class SubscriberViewModel : IViewModel
   {
-    public Guid UserId { get; set; }
+    public int UserId { get; set; }
 
-    public Guid SubscriberUserId { get; set; }
+    public int SubscriberUserId { get; set; }
 
     public string HubName { get; set; }
 

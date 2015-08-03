@@ -23,12 +23,12 @@ namespace PickMeAppGlobal.Data.Repositories
       return await this.DbSet.ToListAsync();
     }
 
-    public async Task<User> GetAsync(Guid id)
+    public async Task<User> GetAsync(int id)
     {
       return await this.DbSet.FirstOrDefaultAsync(m => m.Id == id);
     }
 
-    public async Task<List<Subscriber>> GetSubscribers(Guid userId, string targetUserRole)
+    public async Task<List<Subscriber>> GetSubscribers(int userId, string targetUserRole)
     {
       var user = await this.GetAsync(userId);
       return user.Subscribers.Where(m => m.HubType == targetUserRole).ToList();
@@ -44,14 +44,14 @@ namespace PickMeAppGlobal.Data.Repositories
       return user.Points;
     }
 
-    public async Task<Point> GetLatestPoint(Guid userId)
+    public async Task<Point> GetLatestPoint(int userId)
     {
       IQueryable<Point> userPoints = this.DbContext.Points.Where(p => p.UserId == userId).OrderByDescending(p => p.Date);
       var latestPoint = await userPoints.FirstAsync();
       return latestPoint;
     }
 
-    public async Task<List<Point>> GetLatestPoints(params Guid[] userIds)
+    public async Task<List<Point>> GetLatestPoints(params int[] userIds)
     {
       var query = DbContext.Points.Where(p => userIds.Contains(p.UserId)).AsQueryable();
       var now = DateTime.Now;
@@ -67,7 +67,6 @@ namespace PickMeAppGlobal.Data.Repositories
     public void AddGeolocationPointToUser(Point point)
     {
       point.Date = DateTime.Now;
-      point.Id = Guid.NewGuid();
       this.DbContext.Points.Add(point);
     }
 
@@ -76,7 +75,7 @@ namespace PickMeAppGlobal.Data.Repositories
       this.DbSet.Add(user);
     }
 
-    public void DeleteUser(Guid userId)
+    public void DeleteUser(int userId)
     {
       var user = new User { Id = userId };
       this.DbSet.Attach(user);

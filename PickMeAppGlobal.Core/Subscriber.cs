@@ -1,12 +1,11 @@
-﻿using System;
-
+﻿
 namespace PickMeAppGlobal.Core
 {
   public class Subscriber
   {
-    public Guid UserId { get; set; }
+    public int UserId { get; set; }
 
-    public Guid SubscriberUserId { get; set; }
+    public int SubscriberUserId { get; set; }
 
     public virtual User User { get; set; }
 

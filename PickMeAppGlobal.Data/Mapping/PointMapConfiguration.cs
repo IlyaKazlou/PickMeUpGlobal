@@ -8,7 +8,7 @@ namespace PickMeAppGlobal.Data.Mapping
   {
     public PointMapConfiguration()
     {
-      this.ToTable("Points").HasKey(m => m.Id);
+      this.ToTable("Points").HasKey(m => new { m.UserId, m.Date });
     }
   }
 }
