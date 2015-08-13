@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using PickMeAppGlobal.Core;
-using PickMeAppGlobal.Core.Enumes;
 using PickMeAppGlobal.Data.Repositories;
 using PickMeAppGlobal.Data.Repositories.Interfaces;
 using PickMeAppGlobal.Service.Interfaces;

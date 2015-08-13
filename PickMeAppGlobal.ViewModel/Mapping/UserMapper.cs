@@ -14,8 +14,6 @@ namespace PickMeAppGlobal.ViewModel.Mapping
       if (obj != null)
       {
         viewModel.Name = obj.Name;
-        viewModel.PassengerHubName = obj.PassengerHubName;
-        viewModel.DriverHubName = obj.DriverHubName;
         viewModel.Id = obj.Id;
 
         viewModel.Subscribers = obj.Subscribers.Select(subscriber => new SubscriberViewModel

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Data.Entity;
 
 using PickMeAppGlobal.Core;
@@ -17,27 +18,55 @@ namespace PickMeAppGlobal.Data
     {
       var user1 = new User
       {
-        DriverHubName = "IlyaKazlou_1_Driver",
-        PassengerHubName = "IlyaKazlou_1_Passanger",
         Name = "Ilya Kazlou1",
         Id = 1
       };
 
       var user2 = new User
       {
-        DriverHubName = "IlyaKazlou2_2_Driver",
-        PassengerHubName = "IlyaKazlou2_2_Passanger",
         Name = "Ilya Kazlou2",
         Id = 2
       };
 
       var user3 = new User
       {
-        DriverHubName = "IlyaKazlou3_3_Driver",
-        PassengerHubName = "IlyaKazlou3_3_Passanger",
         Name = "Ilya Kazlou3",
         Id = 3
       };
+
+      context.Organizations.Add(
+        new Organization
+          {
+            CreatedDate = DateTime.Now,
+            LastUpdatedDate = DateTime.Now,
+            Name = "Epam Systems Inc",
+            Offices = new List<Office> { 
+              new Office { 
+                Name = "Куприевича 1", Latitude = (decimal)28.422, Longitude = (decimal)-81.578,
+                Groups = new List<Group>
+                {
+                  new Group { Name = "Nova Team"}, new Group { Name = "Inspiration Team"}
+                }
+              }
+            }
+          });
+
+      context.Organizations.Add(
+        new Organization
+        {
+          CreatedDate = DateTime.Now,
+          LastUpdatedDate = DateTime.Now,
+          Name = "Бел Амкодор",
+          Offices = new List<Office> { 
+              new Office { 
+                Name = "Заводская 37", Latitude = (decimal)27, Longitude = (decimal)-79,
+                Groups = new List<Group>
+                {
+                  new Group { Name = "Отдел эксплуатации и обслуживания"}, new Group { Name = "Отдел контроля качества"}
+                }
+              }
+            }
+        });
 
       user1.Subscribers = new List<Subscriber>
       {

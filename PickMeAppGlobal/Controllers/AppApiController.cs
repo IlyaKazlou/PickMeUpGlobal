@@ -16,9 +16,12 @@ namespace PickMeAppGlobal.Controllers
   {
     private IUserService UserService { get; set; }
 
+    private ICommunityManagementService CommunityManagementService { get; set; }
+
     public AppApiController()
     {
       this.UserService = new UserService();
+      this.CommunityManagementService = new CommunityManagementService();
     }
 
     public async Task AddPoint([FromBody]Point point)
@@ -30,6 +33,11 @@ namespace PickMeAppGlobal.Controllers
     public async Task<List<UserViewModel>> GetAllUsers()
     {
       return await this.UserService.GetAllAsync();
+    }
+
+    public async Task<List<OrganizationViewModel>> GetAllOrganizations()
+    {
+      return await this.CommunityManagementService.GetAllOrganizations();
     }
 
     [HttpPost]

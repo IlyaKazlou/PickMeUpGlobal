@@ -43,6 +43,9 @@
     <Compile Include="Base\BaseEntity.cs" />
     <Compile Include="Base\IEntity.cs" />
     <Compile Include="Enumes\UserRoles.cs" />
+    <Compile Include="Group.cs" />
+    <Compile Include="Office.cs" />
+    <Compile Include="Organization.cs" />
     <Compile Include="Point.cs" />
     <Compile Include="Subscriber.cs" />
     <Compile Include="User.cs" />

@@ -56,6 +56,7 @@ namespace PickMeAppGlobal
         AppId = "841670309262660",
         AppSecret = "8b4eba3df30d4aa95427fa9c90372462",
         Provider = new FacebookAuthProvider(),
+        Scope = { "user_about_me", "user_friends", "email", "read_friendlists", "publish_stream", "user_birthday", "user_location" }
       };
 
       app.UseFacebookAuthentication(FacebookAuthOptions);
