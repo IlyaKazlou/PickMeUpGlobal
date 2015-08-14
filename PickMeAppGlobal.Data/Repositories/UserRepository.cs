@@ -22,12 +22,12 @@ namespace PickMeAppGlobal.Data.Repositories
       return await this.DbSet.ToListAsync();
     }
 
-    public async Task<User> GetAsync(int id)
+    public async Task<User> GetAsync(string id)
     {
       return await this.DbSet.FirstOrDefaultAsync(m => m.Id == id);
     }
 
-    public async Task<List<Subscriber>> GetSubscribers(int userId, string targetUserRole)
+    public async Task<List<Subscriber>> GetSubscribers(string userId, string targetUserRole)
     {
       var user = await this.GetAsync(userId);
       return user.Subscribers.Where(m => m.HubType == targetUserRole).ToList();
@@ -43,14 +43,14 @@ namespace PickMeAppGlobal.Data.Repositories
       return user.Points;
     }
 
-    public async Task<Point> GetLatestPoint(int userId)
+    public async Task<Point> GetLatestPoint(string userId)
     {
       IQueryable<Point> userPoints = this.DbContext.Points.Where(p => p.UserId == userId).OrderByDescending(p => p.Date);
       var latestPoint = await userPoints.FirstAsync();
       return latestPoint;
     }
 
-    public async Task<List<Point>> GetLatestPoints(params int[] userIds)
+    public async Task<List<Point>> GetLatestPoints(params string[] userIds)
     {
       var query = DbContext.Points.Where(p => userIds.Contains(p.UserId)).AsQueryable();
       var now = DateTime.Now;
@@ -74,7 +74,7 @@ namespace PickMeAppGlobal.Data.Repositories
       this.DbSet.Add(user);
     }
 
-    public void DeleteUser(int userId)
+    public void DeleteUser(string userId)
     {
       var user = new User { Id = userId };
       this.DbSet.Attach(user);

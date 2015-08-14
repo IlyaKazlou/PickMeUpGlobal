@@ -11,6 +11,6 @@ namespace PickMeAppGlobal.Service.Interfaces
   {
     Task<List<OrganizationViewModel>> GetAllOrganizations();
 
-    Task<List<OrganizationViewModel>> GetAllUserOrganizations(int userId);
+    Task<List<OrganizationViewModel>> GetAllUserOrganizations(string userId);
   }
 }

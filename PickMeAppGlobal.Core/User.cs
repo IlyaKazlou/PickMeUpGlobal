@@ -1,13 +1,17 @@
 ﻿using System.Collections.Generic;
-using PickMeAppGlobal.Core.Base;
+using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace PickMeAppGlobal.Core
 {
-  public class User : BaseEntity
+  public class User : IdentityUser
   {
-    public string Name { get; set; }
+    public User(string name): base(name)
+    {
+    }
 
-    public string SecondName { get; set; }
+    public User()
+    {
+    }
 
     public string FacebookId { get; set; }
 

@@ -35,12 +35,12 @@ namespace PickMeAppGlobal.Service
       return this.UserMapper.GetViewModelList(await this.UserRepository.GetAllAsync());
     }
 
-    public async Task<UserViewModel> GetAsync(int userId)
+    public async Task<UserViewModel> GetAsync(string userId)
     {
       return this.UserMapper.GetViewModel(await this.UserRepository.GetAsync(userId));
     }
 
-    public async Task<List<SubscriberViewModel>> GetSubscribers(int userId, string targetUserRole)
+    public async Task<List<SubscriberViewModel>> GetSubscribers(string userId, string targetUserRole)
     {
       var subscribers = await this.UserRepository.GetSubscribers(userId, targetUserRole);
       var userIds = subscribers.Select(s => s.SubscriberUserId).ToArray();
@@ -54,7 +54,7 @@ namespace PickMeAppGlobal.Service
       this.UserRepository.AddGeolocationPointToUser(point);
     }
 
-    public async Task<Point> GetLatestPoint(int userId)
+    public async Task<Point> GetLatestPoint(string userId)
     {
       return await this.UserRepository.GetLatestPoint(userId);
     }
@@ -69,12 +69,12 @@ namespace PickMeAppGlobal.Service
       this.UserRepository.AddUser(user);
     }
 
-    public void DeleteUser(int userId)
+    public void DeleteUser(string userId)
     {
       this.UserRepository.DeleteUser(userId);
     }
 
-    public async Task<List<PointViewModel>> GetGeolocationPoints(int userId, Func<Point, bool> expr = null)
+    public async Task<List<PointViewModel>> GetGeolocationPoints(string userId, Func<Point, bool> expr = null)
     {
       var user = await this.UserRepository.GetAsync(userId);
       return this.GetGeolocationPoints(user, expr);

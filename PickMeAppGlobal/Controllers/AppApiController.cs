@@ -2,7 +2,6 @@
 using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Cors;
-
 using PickMeAppGlobal.Controllers.RequestModels;
 using PickMeAppGlobal.Core;
 using PickMeAppGlobal.Service;

@@ -28,7 +28,7 @@ namespace PickMeAppGlobal.Service
       return this.OrganizationMapper.GetViewModelList(data);
     }
 
-    public async Task<List<OrganizationViewModel>> GetAllUserOrganizations(int userId)
+    public async Task<List<OrganizationViewModel>> GetAllUserOrganizations(string userId)
     {
       var data = await this.CommunityManagementRepository.GetAllUserOrganizations(userId);
       return this.OrganizationMapper.GetViewModelList(data);

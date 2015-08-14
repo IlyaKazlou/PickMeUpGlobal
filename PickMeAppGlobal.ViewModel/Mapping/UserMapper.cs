@@ -13,7 +13,7 @@ namespace PickMeAppGlobal.ViewModel.Mapping
       var viewModel = GetEmptyViewModel();
       if (obj != null)
       {
-        viewModel.Name = obj.Name;
+        viewModel.UserName = obj.UserName;
         viewModel.Id = obj.Id;
 
         viewModel.Subscribers = obj.Subscribers.Select(subscriber => new SubscriberViewModel

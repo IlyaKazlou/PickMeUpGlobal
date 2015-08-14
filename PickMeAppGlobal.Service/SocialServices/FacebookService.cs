@@ -24,7 +24,7 @@ namespace PickMeAppGlobal.Service.SocialServices
           {
             var result = (IDictionary<string, object>)e.GetResultData();
             userViewModel.FacebookId = (string)result["id"];
-            userViewModel.Name = (string)result["name"];
+            userViewModel.UserName = (string)result["name"];
           };
 
       await this.FacebookClient.GetTaskAsync("me?fields=name,id,email,picture");

@@ -13,7 +13,7 @@ namespace PickMeAppGlobal.Core
 
     public DateTime LastUpdatedDate { get; set; }
 
-    public int CreatorId { get; set; }
+    public string CreatorId { get; set; }
 
     public virtual List<Office> Offices { get; set; }
 

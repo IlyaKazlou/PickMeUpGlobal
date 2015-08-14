@@ -3,9 +3,9 @@ namespace PickMeAppGlobal.Core
 {
   public class Subscriber
   {
-    public int UserId { get; set; }
+    public string UserId { get; set; }
 
-    public int SubscriberUserId { get; set; }
+    public string SubscriberUserId { get; set; }
 
     public virtual User User { get; set; }
 

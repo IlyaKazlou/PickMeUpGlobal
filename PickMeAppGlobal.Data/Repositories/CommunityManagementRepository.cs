@@ -18,7 +18,7 @@ namespace PickMeAppGlobal.Data.Repositories
       this.DbSet.Include("Offices");
     }
 
-    public async Task<List<Organization>> GetAllUserOrganizations(int userId)
+    public async Task<List<Organization>> GetAllUserOrganizations(string userId)
     {
       var user = await this.DbContext.Users.FirstOrDefaultAsync(m => m.Id == userId);
       return user.Organizations;

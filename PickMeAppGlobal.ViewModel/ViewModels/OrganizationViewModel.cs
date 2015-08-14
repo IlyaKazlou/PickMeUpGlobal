@@ -13,7 +13,7 @@ namespace PickMeAppGlobal.ViewModel.ViewModels
 
     public DateTime LastUpdatedDate { get; set; }
 
-    public int CreatorId { get; set; }
+    public string CreatorId { get; set; }
 
     public virtual List<OfficeViewModel> Offices { get; set; }
   }

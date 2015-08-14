@@ -4,7 +4,7 @@ namespace PickMeAppGlobal.Core
 {
   public class Point
   {
-    public int UserId { get; set; }
+    public string UserId { get; set; }
 
     public DateTime Date { get; set; }
 

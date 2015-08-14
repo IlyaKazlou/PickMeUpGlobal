@@ -6,7 +6,10 @@ using System.Threading.Tasks;
 using System.Web.Http;
 using Microsoft.AspNet.Identity;
 using Microsoft.Owin.Security;
+
+using PickMeAppGlobal.Identity;
 using PickMeAppGlobal.Results;
+using PickMeAppGlobal.ViewModel.ViewModels;
 
 namespace PickMeAppGlobal.Controllers
 {
@@ -14,6 +17,35 @@ namespace PickMeAppGlobal.Controllers
   [RoutePrefix("api/Account")]
   public class AccountController : ApiController
   {
+    private readonly AuthRepository _repo = null;
+
+    public AccountController()
+    {
+      _repo = new AuthRepository();
+    }
+
+    // POST api/Account/Register
+    [AllowAnonymous]
+    [Route("Register")]
+    public async Task<IHttpActionResult> Register(UserAuthViewModel userModel)
+    {
+      if (!ModelState.IsValid)
+      {
+        return BadRequest(ModelState);
+      }
+
+      IdentityResult result = await _repo.RegisterUser(userModel);
+
+      IHttpActionResult errorResult = this.GetErrorResult(result);
+
+      if (errorResult != null)
+      {
+        return errorResult;
+      }
+
+      return Ok();
+    }
+
     // GET api/Account/ExternalLogin
     [OverrideAuthentication]
     [HostAuthentication(DefaultAuthenticationTypes.ExternalCookie)]
@@ -139,6 +171,35 @@ namespace PickMeAppGlobal.Controllers
       if (string.IsNullOrEmpty(match.Value)) return null;
 
       return match.Value;
+    }
+
+    private IHttpActionResult GetErrorResult(IdentityResult result)
+    {
+      if (result == null)
+      {
+        return InternalServerError();
+      }
+
+      if (!result.Succeeded)
+      {
+        if (result.Errors != null)
+        {
+          foreach (string error in result.Errors)
+          {
+            ModelState.AddModelError("", error);
+          }
+        }
+
+        if (ModelState.IsValid)
+        {
+          // No ModelState errors are available to send, so just return an empty BadRequest.
+          return BadRequest();
+        }
+
+        return BadRequest(ModelState);
+      }
+
+      return null;
     }
   }
 }

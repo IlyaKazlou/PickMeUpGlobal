@@ -9,8 +9,7 @@ namespace PickMeAppGlobal.Data.Mapping
     public UserMapConfiguration()
     {
       this.ToTable("Users").HasKey(m => m.Id);
-      this.Property(a => a.Id).HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
-      this.Property(m => m.Name).HasMaxLength(50);
+      this.Property(m => m.UserName).HasMaxLength(50);
 
       this.HasMany(m => m.Subscribers).WithRequired(m => m.User).HasForeignKey(m => m.UserId);
 

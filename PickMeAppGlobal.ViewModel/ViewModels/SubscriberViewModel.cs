@@ -1,12 +1,11 @@
-﻿using System;
-
+﻿
 namespace PickMeAppGlobal.ViewModel.ViewModels
 {
   public class SubscriberViewModel : IViewModel
   {
-    public int UserId { get; set; }
+    public string UserId { get; set; }
 
-    public int SubscriberUserId { get; set; }
+    public string SubscriberUserId { get; set; }
 
     public string HubName { get; set; }
 

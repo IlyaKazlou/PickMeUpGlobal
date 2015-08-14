@@ -4,7 +4,7 @@ namespace PickMeAppGlobal.ViewModel.ViewModels
 {
   public class UserViewModel : IViewModel
   {
-    public string Name { get; set; }
+    public string UserName { get; set; }
 
     public string SecondName { get; set; }
 
@@ -14,7 +14,7 @@ namespace PickMeAppGlobal.ViewModel.ViewModels
 
     public string CoverPhoto { get; set; }
 
-    public int Id { get; set; }
+    public string Id { get; set; }
 
     public string FacebookId { get; set; }
 
