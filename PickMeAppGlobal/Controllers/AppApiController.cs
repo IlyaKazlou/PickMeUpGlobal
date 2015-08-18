@@ -1,7 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Cors;
+using System.Web.Http.Results;
+
 using PickMeAppGlobal.Controllers.RequestModels;
 using PickMeAppGlobal.Core;
 using PickMeAppGlobal.Service;
@@ -23,10 +26,19 @@ namespace PickMeAppGlobal.Controllers
       this.CommunityManagementService = new CommunityManagementService();
     }
 
-    public async Task AddPoint([FromBody]Point point)
+    public async Task<IHttpActionResult> AddPoint([FromBody]Point point)
     {
       this.UserService.AddGeolocationPointToUser(point);
-      await this.UserService.SaveChangesAsync();
+      try
+      {
+        await this.UserService.SaveChangesAsync();
+      }
+      catch (Exception e)
+      {
+        return new InternalServerErrorResult(Request);
+      }
+
+      return new OkResult(Request);
     }
 
     public async Task<List<UserViewModel>> GetAllUsers()
@@ -37,6 +49,12 @@ namespace PickMeAppGlobal.Controllers
     public async Task<List<OrganizationViewModel>> GetAllOrganizations()
     {
       return await this.CommunityManagementService.GetAllOrganizations();
+    }
+
+    [HttpGet]
+    public async Task<List<OrganizationViewModel>> GetAllUserOrganizations([FromUri]string userId)
+    {
+      return await this.CommunityManagementService.GetAllUserOrganizations(userId);
     }
 
     [HttpPost]

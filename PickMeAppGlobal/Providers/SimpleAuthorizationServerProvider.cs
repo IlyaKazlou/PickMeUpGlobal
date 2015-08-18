@@ -80,6 +80,9 @@ namespace PickMeAppGlobal.Providers
 
     public override async Task GrantResourceOwnerCredentials(OAuthGrantResourceOwnerCredentialsContext context)
     {
+      IdentityUser user;
+
+      var data = await context.Request.ReadFormAsync();
 
       var allowedOrigin = context.OwinContext.Get<string>("as:clientAllowedOrigin");
 
@@ -89,17 +92,17 @@ namespace PickMeAppGlobal.Providers
 
       using (AuthRepository _repo = new AuthRepository())
       {
-        IdentityUser user = await _repo.FindUser(context.UserName, context.Password);
+        user = await _repo.FindUser(data["email"], context.Password);
 
         if (user == null)
         {
-          context.SetError("invalid_grant", "The user name or password is incorrect.");
+          context.SetError("invalid_grant", "The user email or password is incorrect.");
           return;
         }
       }
 
       var identity = new ClaimsIdentity(context.Options.AuthenticationType);
-      identity.AddClaim(new Claim(ClaimTypes.Name, context.UserName));
+      identity.AddClaim(new Claim(ClaimTypes.Email, data["email"]));
       identity.AddClaim(new Claim(ClaimTypes.Role, "user"));
       identity.AddClaim(new Claim("sub", context.UserName));
 
@@ -109,13 +112,18 @@ namespace PickMeAppGlobal.Providers
               "as:client_id", (context.ClientId == null) ? string.Empty : context.ClientId
           },
           { 
-              "userName", context.UserName
+              "userName", user.UserName
+          },
+          {
+            "email", user.Email
+          },
+          {
+            "id", user.Id
           }
       });
 
       var ticket = new AuthenticationTicket(identity, props);
       context.Validated(ticket);
-
     }
 
     public override Task GrantRefreshToken(OAuthGrantRefreshTokenContext context)

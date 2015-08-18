@@ -12,6 +12,7 @@ namespace PickMeAppGlobal.Providers
     public async Task CreateAsync(AuthenticationTokenCreateContext context)
     {
       var clientid = context.Ticket.Properties.Dictionary["as:client_id"];
+      var email = context.Ticket.Properties.Dictionary["email"];
 
       if (string.IsNullOrEmpty(clientid))
       {
@@ -28,7 +29,7 @@ namespace PickMeAppGlobal.Providers
         {
           Id = Helper.GetHash(refreshTokenId),
           ClientId = clientid,
-          Subject = context.Ticket.Identity.Name,
+          Subject = email,
           IssuedUtc = DateTime.UtcNow,
           ExpiresUtc = DateTime.UtcNow.AddMinutes(Convert.ToDouble(refreshTokenLifeTime))
         };

@@ -29,7 +29,8 @@ namespace PickMeAppGlobal.Identity
     {
       User user = new User
       {
-        UserName = userModel.UserName
+        UserName = userModel.UserName,
+        Email = userModel.Email
       };
 
       var result = await this._userManager.CreateAsync(user, userModel.Password);
@@ -37,9 +38,14 @@ namespace PickMeAppGlobal.Identity
       return result;
     }
 
-    public async Task<User> FindUser(string userName, string password)
+    public async Task<User> FindUser(string email, string password)
     {
-      User user = await this._userManager.FindAsync(userName, password);
+      var user = await this._userManager.FindByEmailAsync(email);
+
+      if (!await this._userManager.CheckPasswordAsync(user, password))
+      {
+        return null;
+      }
 
       return user;
     }

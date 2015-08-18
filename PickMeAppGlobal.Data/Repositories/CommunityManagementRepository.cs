@@ -1,7 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Data.Entity;
-using System.Data.Entity.Core.Objects;
-using System.Data.Entity.Infrastructure;
 using System.Threading.Tasks;
 using PickMeAppGlobal.Core;
 using PickMeAppGlobal.Data.Repositories.Interfaces;
@@ -20,6 +18,8 @@ namespace PickMeAppGlobal.Data.Repositories
 
     public async Task<List<Organization>> GetAllUserOrganizations(string userId)
     {
+      if (string.IsNullOrEmpty(userId)) return null;
+      
       var user = await this.DbContext.Users.FirstOrDefaultAsync(m => m.Id == userId);
       return user.Organizations;
     }
