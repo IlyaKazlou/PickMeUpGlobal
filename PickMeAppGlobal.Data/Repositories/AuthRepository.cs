@@ -7,10 +7,9 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 
 using PickMeAppGlobal.Core;
-using PickMeAppGlobal.Data;
-using PickMeAppGlobal.ViewModel.ViewModels;
+using PickMeAppGlobal.Data.Models;
 
-namespace PickMeAppGlobal.Identity
+namespace PickMeAppGlobal.Data.Repositories
 {
 
   public class AuthRepository : IDisposable
@@ -20,12 +19,31 @@ namespace PickMeAppGlobal.Identity
     private readonly UserManager<User> _userManager;
 
     public AuthRepository()
+      : this(new PickMeAppContext())
     {
-      this._ctx = new PickMeAppContext();
+    }
+
+    public AuthRepository(PickMeAppContext context)
+    {
+      this._ctx = context;
       this._userManager = new UserManager<User>(new UserStore<User>(this._ctx));
     }
 
-    public async Task<IdentityResult> RegisterUser(UserAuthViewModel userModel)
+    public async Task<IdentityResult> RegisterUserAsync(UserAuthViewModel userModel)
+    {
+      var user = this.GetUser(userModel);
+      var result = await this._userManager.CreateAsync(user, userModel.Password);
+      return result;
+    }
+
+    public IdentityResult RegisterUser(UserAuthViewModel userModel)
+    {
+      var user = this.GetUser(userModel);
+      var result = this._userManager.Create(user, userModel.Password);
+      return result;
+    }
+
+    private User GetUser(UserAuthViewModel userModel)
     {
       User user = new User
       {
@@ -33,9 +51,7 @@ namespace PickMeAppGlobal.Identity
         Email = userModel.Email
       };
 
-      var result = await this._userManager.CreateAsync(user, userModel.Password);
-
-      return result;
+      return user;
     }
 
     public async Task<User> FindUser(string email, string password)
@@ -59,12 +75,11 @@ namespace PickMeAppGlobal.Identity
 
     public async Task<bool> AddRefreshToken(RefreshToken token)
     {
+      var existingTokens = this._ctx.RefreshTokens.Where(r => r.Subject == token.Subject && r.ClientId == token.ClientId);
 
-      var existingToken = this._ctx.RefreshTokens.SingleOrDefault(r => r.Subject == token.Subject && r.ClientId == token.ClientId);
-
-      if (existingToken != null)
+      if (existingTokens.Any())
       {
-        var result = await RemoveRefreshToken(existingToken);
+        var result = await this.RemoveRefreshToken(existingTokens.ToArray());
       }
 
       this._ctx.RefreshTokens.Add(token);
@@ -85,9 +100,9 @@ namespace PickMeAppGlobal.Identity
       return false;
     }
 
-    public async Task<bool> RemoveRefreshToken(RefreshToken refreshToken)
+    public async Task<bool> RemoveRefreshToken(params RefreshToken[] refreshTokens)
     {
-      this._ctx.RefreshTokens.Remove(refreshToken);
+      refreshTokens.ToList().ForEach(t => this._ctx.RefreshTokens.Remove(t));
       return await this._ctx.SaveChangesAsync() > 0;
     }
 
@@ -128,7 +143,6 @@ namespace PickMeAppGlobal.Identity
     {
       this._ctx.Dispose();
       this._userManager.Dispose();
-
     }
   }
 }

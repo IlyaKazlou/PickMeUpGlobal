@@ -5,7 +5,10 @@ using Microsoft.Owin.Security.Facebook;
 using Owin;
 using System.Web.Http;
 
-using Microsoft.Owin.Security.Infrastructure;
+using Jobs;
+
+using Microsoft.AspNet.SignalR;
+using Microsoft.Owin.Cors;
 using Microsoft.Owin.Security.OAuth;
 
 using PickMeAppGlobal.Providers;
@@ -22,12 +25,16 @@ namespace PickMeAppGlobal
     public void Configuration(IAppBuilder app)
     {
       HttpConfiguration config = new HttpConfiguration();
-
       this.ConfigureOAuth(app);
-
       WebApiConfig.Register(config);
-      app.UseCors(Microsoft.Owin.Cors.CorsOptions.AllowAll);
+      app.UseCors(CorsOptions.AllowAll);
       app.UseWebApi(config);
+
+      var signalrConfig = new HubConfiguration { EnableJSONP = true, EnableDetailedErrors = true };
+      app.MapSignalR(signalrConfig);
+
+      //var runner = new JobRunner();
+      //runner.Run();
     }
 
     public void ConfigureOAuth(IAppBuilder app)
@@ -36,9 +43,8 @@ namespace PickMeAppGlobal
       app.UseExternalSignInCookie(Microsoft.AspNet.Identity.DefaultAuthenticationTypes.ExternalCookie);
       OAuthBearerOptions = new OAuthBearerAuthenticationOptions();
 
-      OAuthAuthorizationServerOptions OAuthServerOptions = new OAuthAuthorizationServerOptions()
+      OAuthAuthorizationServerOptions oAuthServerOptions = new OAuthAuthorizationServerOptions()
       {
-
         AllowInsecureHttp = true,
         TokenEndpointPath = new PathString("/token"),
         AccessTokenExpireTimeSpan = TimeSpan.FromMinutes(30),
@@ -47,7 +53,7 @@ namespace PickMeAppGlobal
       };
 
       // Token Generation
-      app.UseOAuthAuthorizationServer(OAuthServerOptions);
+      app.UseOAuthAuthorizationServer(oAuthServerOptions);
       app.UseOAuthBearerAuthentication(OAuthBearerOptions);
 
       //Configure Facebook External Login

@@ -17,7 +17,7 @@ namespace PickMeAppGlobal.Data.Repositories
       await this.DbContext.SaveChangesAsync();
     }
 
-    public void Dispose()
+    public virtual void Dispose()
     {
       this.DbContext.Dispose();
     }

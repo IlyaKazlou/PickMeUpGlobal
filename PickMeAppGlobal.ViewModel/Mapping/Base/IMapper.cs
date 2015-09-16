@@ -4,7 +4,7 @@ using PickMeAppGlobal.ViewModel.ViewModels;
 
 namespace PickMeAppGlobal.ViewModel.Mapping.Base
 {
-  public interface IMapper<TViewModel, TEntity>
+  public interface IMapper<TViewModel, TEntity> : IMap
       where TViewModel : class, IViewModel
   {
     TViewModel GetViewModel(TEntity obj);

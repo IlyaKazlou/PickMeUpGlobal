@@ -12,13 +12,13 @@ namespace PickMeAppGlobal.Service.Interfaces
 
     Task<List<UserViewModel>> GetAllAsync();
 
-    Task<UserViewModel> GetAsync(string userId);
-
-    Task<List<SubscriberViewModel>> GetSubscribers(string userId, string targetUserRole);
+    Task<UserViewModel> GetAsync(string userId, bool catchGroups = false);
 
     void AddGeolocationPointToUser(Point point);
 
     List<PointViewModel> GetGeolocationPoints(User user, Func<Point, bool> expr = null);
+
+    Task<List<PointViewModel>> GetUserLocationHistory(string userId, DateTime? from, DateTime? to);
 
     void AddUser(User user);
 

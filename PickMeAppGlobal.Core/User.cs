@@ -13,16 +13,12 @@ namespace PickMeAppGlobal.Core
     {
     }
 
-    public string FacebookId { get; set; }
+    public string CurrentUserRole { get; set; }
 
-    public virtual List<Subscriber> Subscribers { get; set; }
+    public string FacebookId { get; set; }
 
     public virtual List<Point> Points { get; set; }
 
-    public virtual List<Group> Groups { get; set; }
-
-    public virtual List<Organization> Organizations { get; set; }
-
-    public virtual List<Office> Offices { get; set; }
+    public virtual List<UserGroupInfo> UserGroupInfos { get; set; }
   }
 }

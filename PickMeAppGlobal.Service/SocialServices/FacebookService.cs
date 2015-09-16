@@ -23,7 +23,7 @@ namespace PickMeAppGlobal.Service.SocialServices
           (o, e) =>
           {
             var result = (IDictionary<string, object>)e.GetResultData();
-            userViewModel.FacebookId = (string)result["id"];
+            //userViewModel.FacebookId = (string)result["id"];
             userViewModel.UserName = (string)result["name"];
           };
 

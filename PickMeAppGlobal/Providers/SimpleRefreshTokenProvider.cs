@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using Microsoft.Owin.Security.Infrastructure;
 using PickMeAppGlobal.Core;
 using PickMeAppGlobal.Core.Infrastructure;
-using PickMeAppGlobal.Identity;
+using PickMeAppGlobal.Data.Repositories;
 
 namespace PickMeAppGlobal.Providers
 {

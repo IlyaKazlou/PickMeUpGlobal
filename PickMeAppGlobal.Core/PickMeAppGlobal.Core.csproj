@@ -60,13 +60,13 @@
     <Compile Include="Enumes\UserRoles.cs" />
     <Compile Include="Group.cs" />
     <Compile Include="Infrastructure\Helper.cs" />
-    <Compile Include="Office.cs" />
-    <Compile Include="Organization.cs" />
+    <Compile Include="MetaTag.cs" />
     <Compile Include="Point.cs" />
+    <Compile Include="PointHistory.cs" />
     <Compile Include="RefreshToken.cs" />
-    <Compile Include="Subscriber.cs" />
     <Compile Include="User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UserGroupInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

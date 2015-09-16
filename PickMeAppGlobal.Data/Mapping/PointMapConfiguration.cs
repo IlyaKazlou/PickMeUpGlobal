@@ -9,6 +9,8 @@ namespace PickMeAppGlobal.Data.Mapping
     public PointMapConfiguration()
     {
       this.ToTable("Points").HasKey(m => new { m.UserId, m.Date });
+      this.Property(m => m.Latitude).HasPrecision(32, 24);
+      this.Property(m => m.Longitude).HasPrecision(32, 24);
     }
   }
 }

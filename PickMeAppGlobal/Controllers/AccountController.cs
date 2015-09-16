@@ -7,9 +7,9 @@ using System.Web.Http;
 using Microsoft.AspNet.Identity;
 using Microsoft.Owin.Security;
 
-using PickMeAppGlobal.Identity;
+using PickMeAppGlobal.Data.Models;
+using PickMeAppGlobal.Data.Repositories;
 using PickMeAppGlobal.Results;
-using PickMeAppGlobal.ViewModel.ViewModels;
 
 namespace PickMeAppGlobal.Controllers
 {
@@ -34,7 +34,7 @@ namespace PickMeAppGlobal.Controllers
         return BadRequest(ModelState);
       }
 
-      IdentityResult result = await _repo.RegisterUser(userModel);
+      IdentityResult result = await _repo.RegisterUserAsync(userModel);
 
       IHttpActionResult errorResult = this.GetErrorResult(result);
 

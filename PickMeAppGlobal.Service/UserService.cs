@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 using PickMeAppGlobal.Core;
 using PickMeAppGlobal.Data.Repositories;
@@ -15,18 +16,18 @@ namespace PickMeAppGlobal.Service
   {
     public IUserRepository UserRepository { get; set; }
 
-    protected UserMapper UserMapper { get; set; }
+    public ICommunityManagementRepository CommunityManagementRepository { get; set; }
 
-    protected SubscriberMapper SubscriberMapper { get; set; }
+    protected UserMapper UserMapper { get; set; }
 
     protected PointMapper PointMapper { get; set; }
 
     public UserService()
     {
       this.UserRepository = new UserRepository();
+      this.CommunityManagementRepository = new CommunityManagementRepository();
 
       this.UserMapper = new UserMapper();
-      this.SubscriberMapper = new SubscriberMapper();
       this.PointMapper = new PointMapper();
     }
 
@@ -35,18 +36,25 @@ namespace PickMeAppGlobal.Service
       return this.UserMapper.GetViewModelList(await this.UserRepository.GetAllAsync());
     }
 
-    public async Task<UserViewModel> GetAsync(string userId)
+    public async Task<UserViewModel> GetAsync(string userId, bool catchGroups = false)
     {
+      if (catchGroups)
+      {
+        var user = await this.UserRepository.GetAsync(userId);
+        var userGroups = await this.CommunityManagementRepository.GetAllUserGroups(user.Id);
+        return this.UserMapper.GetViewModel(await this.UserRepository.GetAsync(userId), userGroups);
+      }
       return this.UserMapper.GetViewModel(await this.UserRepository.GetAsync(userId));
     }
 
-    public async Task<List<SubscriberViewModel>> GetSubscribers(string userId, string targetUserRole)
+    public async Task<UserViewModel> GetAsync(Expression<Func<User, bool>> expr)
     {
-      var subscribers = await this.UserRepository.GetSubscribers(userId, targetUserRole);
-      var userIds = subscribers.Select(s => s.SubscriberUserId).ToArray();
-      var latestPoints = await this.UserRepository.GetLatestPoints(userIds);
-      var viewModels = this.SubscriberMapper.GetViewModelList(subscribers, latestPoints);
-      return viewModels;
+      return this.UserMapper.GetViewModel(await this.UserRepository.GetAsync(expr));
+    }
+
+    public async Task<List<Point>> GetLatestPoints(string [] userIds)
+    {
+      return await this.UserRepository.GetLatestPoints(userIds);
     }
 
     public void AddGeolocationPointToUser(Point point)
@@ -62,6 +70,13 @@ namespace PickMeAppGlobal.Service
     public List<PointViewModel> GetGeolocationPoints(User user, Func<Point, bool> expr = null)
     {
       return this.PointMapper.GetViewModelList(this.UserRepository.GetGeolocationPoints(user, expr));
+    }
+
+    public async Task<List<PointViewModel>> GetUserLocationHistory(string userId, DateTime? from, DateTime? to)
+    {
+      var points = await this.UserRepository.GetUserLocationHistory(userId, from, to);
+      points = points.OrderBy(m => m.Date).ToList();
+      return this.PointMapper.GetViewModelList(points);
     }
 
     public void AddUser(User user)

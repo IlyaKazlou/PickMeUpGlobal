@@ -7,8 +7,14 @@ namespace PickMeAppGlobal.Data.Repositories.Interfaces
 {
   public interface ICommunityManagementRepository
   {
-    Task<List<Organization>> GetAllOrganizations();
+    Task<List<Group>> GetAllGroups();
 
-    Task<List<Organization>> GetAllUserOrganizations(string userId);
+    Task<Group> GetAsync(int groupId);
+
+    Task<List<Group>> GetAllUserGroups(string userId);
+
+    Task<List<MetaTag>> GetGroupMetaTags(int groupId, int from, int to);
+
+    Task<List<User>> GetGroupSubsctibers(int groupId, string[] tags, string conditionalOperator);
   }
 }

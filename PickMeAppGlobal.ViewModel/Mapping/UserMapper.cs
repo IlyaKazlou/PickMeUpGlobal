@@ -1,4 +1,6 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
+
 using PickMeAppGlobal.Core;
 using PickMeAppGlobal.ViewModel.Mapping.Base;
 using PickMeAppGlobal.ViewModel.ViewModels;
@@ -14,16 +16,16 @@ namespace PickMeAppGlobal.ViewModel.Mapping
       if (obj != null)
       {
         viewModel.UserName = obj.UserName;
+        viewModel.CurrentRole = obj.CurrentUserRole;
         viewModel.Id = obj.Id;
-
-        viewModel.Subscribers = obj.Subscribers.Select(subscriber => new SubscriberViewModel
-        {
-          HubName = subscriber.HubName,
-          HubType = subscriber.HubType,
-          SubscriberUserId = subscriber.SubscriberUserId,
-          UserId = subscriber.UserId
-        }).ToList();
       }
+      return viewModel;
+    }
+
+    public UserViewModel GetViewModel(User obj, List<Group> userGroups)
+    {
+      var viewModel = this.GetViewModel(obj);
+      viewModel.Groups = userGroups.Select(g => g.Name).ToArray();
       return viewModel;
     }
   }

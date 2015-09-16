@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace PickMeAppGlobal.ViewModel.ViewModels
+namespace PickMeAppGlobal.Data.Models
 {
   public class UserAuthViewModel
   {
@@ -21,5 +21,9 @@ namespace PickMeAppGlobal.ViewModel.ViewModels
     [Display(Name = "Confirm password")]
     [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
     public string ConfirmPassword { get; set; }
+
+    public string TagConditionalOperator { get; set; }
+
+    public string MetaTags { get; set; }
   }
 }

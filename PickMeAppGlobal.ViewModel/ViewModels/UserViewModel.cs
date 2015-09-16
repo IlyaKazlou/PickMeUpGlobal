@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-
+﻿
 namespace PickMeAppGlobal.ViewModel.ViewModels
 {
   public class UserViewModel : IViewModel
@@ -8,16 +7,12 @@ namespace PickMeAppGlobal.ViewModel.ViewModels
 
     public string SecondName { get; set; }
 
-    public string DriverHubName { get; set; }
+    public string CurrentRole { get; set; }
 
-    public string PassengerHubName { get; set; }
+    public string[] Groups { get; set; }
 
     public string CoverPhoto { get; set; }
 
     public string Id { get; set; }
-
-    public string FacebookId { get; set; }
-
-    public virtual List<SubscriberViewModel> Subscribers { get; set; }
   }
 }

@@ -46,21 +46,39 @@ namespace PickMeAppGlobal.Controllers
       return await this.UserService.GetAllAsync();
     }
 
-    public async Task<List<OrganizationViewModel>> GetAllOrganizations()
+    [HttpGet]
+    public async Task<UserViewModel> GetUser(string userId)
     {
-      return await this.CommunityManagementService.GetAllOrganizations();
+      return await this.UserService.GetAsync(userId, true);
+    }
+
+    public async Task<List<GroupViewModel>> GetAllGroups()
+    {
+      return await this.CommunityManagementService.GetAllGroups();
     }
 
     [HttpGet]
-    public async Task<List<OrganizationViewModel>> GetAllUserOrganizations([FromUri]string userId)
+    public async Task<List<GroupViewModel>> GetAllUserGroups([FromUri]string userId)
     {
-      return await this.CommunityManagementService.GetAllUserOrganizations(userId);
+      return await this.CommunityManagementService.GetAllUserGroups(userId);
+    }
+
+    [HttpGet]
+    public async Task<List<MetaTagViewModel>> GetGroupMetatags([FromUri]int groupId, [FromUri]int from, [FromUri]int to)
+    {
+      return await this.CommunityManagementService.GetGroupMetaTags(groupId, from, to);
     }
 
     [HttpPost]
-    public async Task<List<SubscriberViewModel>> GetUserSubscribers([FromBody]UserInRoleQuery query)
+    public async Task<List<SubscriberViewModel>> GetTargetSubscribers([FromBody]GetGroupSubscribersQuery query)
     {
-      return await this.UserService.GetSubscribers(query.UserId, query.CurrentUserRole);
+      return await this.CommunityManagementService.GetGroupSubsctibers(query.GroupId, query.Tags, query.ConditionalOperator);
+    }
+
+    [HttpGet]
+    public async Task<List<PointViewModel>> GetUserLocationHistory([FromUri]DateTime? from, [FromUri]DateTime? to, [FromUri]string userId)
+    {
+      return await this.UserService.GetUserLocationHistory(userId, from, to);
     }
 
     protected override void Dispose(bool disposing)

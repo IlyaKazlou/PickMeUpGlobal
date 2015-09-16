@@ -45,6 +45,7 @@
     <Reference Include="Microsoft.Azure.NotificationHubs">
       <HintPath>..\packages\Microsoft.Azure.NotificationHubs.1.0.3\lib\net45-full\Microsoft.Azure.NotificationHubs.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.Build.Framework" />
     <Reference Include="Microsoft.WindowsAzure.Configuration">
       <HintPath>..\packages\Microsoft.WindowsAzure.ConfigurationManager.3.1.0\lib\net40\Microsoft.WindowsAzure.Configuration.dll</HintPath>
     </Reference>
@@ -53,6 +54,7 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Transactions" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -60,9 +62,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Migrations\201509101201034_InitialCreate.cs" />
+    <Compile Include="Migrations\201509101201034_InitialCreate.Designer.cs">
+      <DependentUpon>201509101201034_InitialCreate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Repositories\HistoryRepository.cs" />
+    <Compile Include="Mapping\GroupMapConfiguration.cs" />
+    <Compile Include="Models\UserAuthViewModel.cs" />
+    <Compile Include="Repositories\AuthRepository.cs" />
     <Compile Include="Repositories\CommunityManagementRepository.cs" />
     <Compile Include="Mapping\PointMapConfiguration.cs" />
-    <Compile Include="Mapping\SubscriberMapConfiguration.cs" />
     <Compile Include="Mapping\UserMapConfiguration.cs" />
     <Compile Include="PickMeAppContext.cs" />
     <Compile Include="PickMeAppDBInitializer.cs" />
@@ -70,6 +80,7 @@
     <Compile Include="Repositories\BaseRepository.cs" />
     <Compile Include="Repositories\Interfaces\IBaseRepository.cs" />
     <Compile Include="Repositories\Interfaces\ICommunityManagementRepository.cs" />
+    <Compile Include="Repositories\Interfaces\IHistoryRepository.cs" />
     <Compile Include="Repositories\Interfaces\IUserRepository.cs" />
     <Compile Include="Repositories\UserRepository.cs" />
   </ItemGroup>
@@ -77,7 +88,11 @@
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201509101201034_InitialCreate.resx">
+      <DependentUpon>201509101201034_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\PickMeAppGlobal.Core\PickMeAppGlobal.Core.csproj">
       <Project>{cca3342c-d280-4395-a972-0da30c336c86}</Project>

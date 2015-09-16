@@ -48,6 +48,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Mapping\Base\BaseMapper.cs" />
+    <Compile Include="Mapping\Base\IMap.cs" />
     <Compile Include="Mapping\Base\IMapper.cs" />
     <Compile Include="Mapping\Base\Target.cs" />
     <Compile Include="Mapping\CommunityMapper.cs" />
@@ -57,9 +58,8 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModels\GroupViewModel.cs" />
     <Compile Include="ViewModels\IViewModel.cs" />
-    <Compile Include="ViewModels\UserAuthViewModel.cs" />
+    <Compile Include="ViewModels\MetaTagViewModel.cs" />
     <Compile Include="ViewModels\OfficeViewModel.cs" />
-    <Compile Include="ViewModels\OrganizationViewModel.cs" />
     <Compile Include="ViewModels\PointViewModel.cs" />
     <Compile Include="ViewModels\SubscriberViewModel.cs" />
     <Compile Include="ViewModels\UserViewModel.cs" />

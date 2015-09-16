@@ -8,45 +8,24 @@ using PickMeAppGlobal.ViewModel.ViewModels;
 
 namespace PickMeAppGlobal.ViewModel.Mapping
 {
-  public class CommunityMapper : BaseMapper<OrganizationViewModel, Organization>
+  public class CommunityMapper : BaseMapper<GroupViewModel, Group>
   {
-    public override OrganizationViewModel GetViewModel(Organization obj)
+    public override GroupViewModel GetViewModel(Group obj)
     {
       var viewModel = GetEmptyViewModel();
       if (obj != null)
       {
-        viewModel.CreatedDate = obj.CreatedDate;
-        viewModel.CreatorId = obj.CreatorId;
-        viewModel.Id = obj.Id;
-        viewModel.LastUpdatedDate = obj.LastUpdatedDate;
         viewModel.Name = obj.Name;
-        viewModel.Offices = this.GetOfficeViewModels(obj.Offices);
+        viewModel.Id = obj.Id;
       }
 
       return viewModel;
     }
 
-    private List<OfficeViewModel> GetOfficeViewModels(List<Office> offices)
+    public List<MetaTagViewModel> GetMetaTagViewModels(List<MetaTag> tags)
     {
-      return offices.Select(o => new OfficeViewModel
-      {
-        Id = o.Id,
-        Latitude = o.Latitude,
-        Longitude = o.Longitude,
-        Name = o.Name,
-        OrganizationId = o.OrganizationId,
-        Groups = this.GetGroupViewModels(o.Groups)
-      }).ToList();
-    }
-
-    private List<GroupViewModel> GetGroupViewModels(List<Group> groups)
-    {
-      return groups.Select(o => new GroupViewModel()
-      {
-        Name = o.Name,
-        Id = o.Id,
-        OfficeId = o.OfficeId
-      }).ToList();
+      var result = tags.Select(t => new MetaTagViewModel { Name = t.Name, Defines = t.Defines, Description = t.Description }).ToList();
+      return result;
     }
   }
 }

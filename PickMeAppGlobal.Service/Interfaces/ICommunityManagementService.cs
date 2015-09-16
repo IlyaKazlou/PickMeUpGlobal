@@ -2,15 +2,18 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-using PickMeAppGlobal.Core;
 using PickMeAppGlobal.ViewModel.ViewModels;
 
 namespace PickMeAppGlobal.Service.Interfaces
 {
   public interface ICommunityManagementService
   {
-    Task<List<OrganizationViewModel>> GetAllOrganizations();
+    Task<List<GroupViewModel>> GetAllGroups();
 
-    Task<List<OrganizationViewModel>> GetAllUserOrganizations(string userId);
+    Task<List<GroupViewModel>> GetAllUserGroups(string userId);
+
+    Task<List<MetaTagViewModel>> GetGroupMetaTags(int groupId, int from, int to);
+
+    Task<List<SubscriberViewModel>> GetGroupSubsctibers(int groupId, string[] tags, string conditionalOperator);
   }
 }

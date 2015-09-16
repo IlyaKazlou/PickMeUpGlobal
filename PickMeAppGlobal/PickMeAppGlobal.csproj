@@ -58,6 +58,18 @@
     <Reference Include="Microsoft.AspNet.Identity.Owin">
       <HintPath>..\packages\Microsoft.AspNet.Identity.Owin.2.2.1\lib\net45\Microsoft.AspNet.Identity.Owin.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.AspNet.SignalR.Client">
+      <HintPath>..\packages\Microsoft.AspNet.SignalR.Client.2.2.0\lib\net45\Microsoft.AspNet.SignalR.Client.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.SignalR.Core">
+      <HintPath>..\packages\Microsoft.AspNet.SignalR.Core.2.2.0\lib\net45\Microsoft.AspNet.SignalR.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.SignalR.Owin">
+      <HintPath>..\packages\Microsoft.AspNet.SignalR.Owin.1.2.2\lib\net45\Microsoft.AspNet.SignalR.Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.SignalR.SystemWeb">
+      <HintPath>..\packages\Microsoft.AspNet.SignalR.SystemWeb.2.2.0\lib\net45\Microsoft.AspNet.SignalR.SystemWeb.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Azure.NotificationHubs">
       <HintPath>..\packages\Microsoft.Azure.NotificationHubs.1.0.3\lib\net45-full\Microsoft.Azure.NotificationHubs.dll</HintPath>
     </Reference>
@@ -207,12 +219,13 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\AppApiController.cs" />
     <Compile Include="Controllers\PushNotificationController.cs" />
-    <Compile Include="Controllers\RequestModels\UserInRoleQuery.cs" />
+    <Compile Include="Controllers\RequestModels\GetGroupSubscribersQuery.cs" />
+    <Compile Include="Controllers\RequestModels\UpdateUserTagsOfSpecificGroupQuery.cs" />
     <Compile Include="Controllers\SocialNetworkController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Identity\AuthRepository.cs" />
+    <Compile Include="signalr\hubs\UserStateChangeHub.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Providers\FacebookAuthProvider.cs" />
     <Compile Include="Providers\SimpleAuthorizationServerProvider.cs" />
@@ -241,9 +254,12 @@
     <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\ApiGroup.cshtml" />
     <Content Include="Areas\HelpPage\Views\Help\Api.cshtml" />
     <None Include="Properties\PublishProfiles\PickMeUpSiteApp.pubxml" />
+    <Content Include="Properties\webjobs-list.json" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
+    <Content Include="Scripts\jquery.signalR-2.2.0.js" />
+    <Content Include="Scripts\jquery.signalR-2.2.0.min.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
@@ -268,6 +284,10 @@
     <Content Include="Views\Home\SuccessfulAuthorization.cshtml" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Jobs\Jobs.csproj">
+      <Project>{a6531bf1-b3d9-4837-ac6a-520c584ac4ff}</Project>
+      <Name>Jobs</Name>
+    </ProjectReference>
     <ProjectReference Include="..\PickMeAppGlobal.Core\PickMeAppGlobal.Core.csproj">
       <Project>{cca3342c-d280-4395-a972-0da30c336c86}</Project>
       <Name>PickMeAppGlobal.Core</Name>
@@ -320,6 +340,7 @@
       </FlavorProperties>
     </VisualStudio>
   </ProjectExtensions>
+  <Import Project="..\packages\Microsoft.Web.WebJobs.Publish.1.0.2\tools\webjobs.targets" Condition="Exists('..\packages\Microsoft.Web.WebJobs.Publish.1.0.2\tools\webjobs.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

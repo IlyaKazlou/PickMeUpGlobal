@@ -69,6 +69,7 @@
   <ItemGroup>
     <Compile Include="CommunityManagementService.cs" />
     <Compile Include="HubManagementService.cs" />
+    <Compile Include="Infrastructure\PointEqualityComparer.cs" />
     <Compile Include="Interfaces\ICommunityManagementService.cs" />
     <Compile Include="Interfaces\IService.cs" />
     <Compile Include="Interfaces\ISocialNetworkService.cs" />

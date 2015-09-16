@@ -10,7 +10,7 @@ using Microsoft.Owin.Security.OAuth;
 using PickMeAppGlobal.Core;
 using PickMeAppGlobal.Core.Enumes;
 using PickMeAppGlobal.Core.Infrastructure;
-using PickMeAppGlobal.Identity;
+using PickMeAppGlobal.Data.Repositories;
 
 namespace PickMeAppGlobal.Providers
 {
